@@ -18,7 +18,7 @@
 // along with uLCD_4DGL.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "mbed.h"
-#include "uLCD_4DGL.h"
+#include <4DGL-uLCD-144-MBedOS6/uLCD_4DGL.hpp>
 
 
 //Media Commands
@@ -30,10 +30,15 @@ int uLCD_4DGL :: media_init()
     char command[1] = "";
     command[0] = MINIT;
     writeCOMMAND(command, 1);
-    while (!_cmd.readable()) wait_ms(TEMPO);              // wait for screen answer
+    //used to wait for TEMPO ms, defined as 0 in uLCD_4DGL.hpp
+    while (!_cmd.readable()) ThisThread::sleep_for(0s);              // wait for screen answer
     if (_cmd.readable()) {
-        resp = _cmd.getc();           // read response
-        resp = resp << 8 + _cmd.getc();
+        //change from getc
+        char *ret = 0;
+        _cmd.read(ret, 1);  
+        resp = (int) *ret;           // read response
+        _cmd.read(ret, 1);  
+        resp = resp << (8 + (int) *ret);
     }
     return resp;
 }
@@ -74,10 +79,14 @@ char uLCD_4DGL :: read_byte()
     char command[1] = "";
     command[0] = READBYTE;
     writeCOMMAND(command, 1);
-    while (!_cmd.readable()) wait_ms(TEMPO);              // wait for screen answer
+    //used to wait for TEMPO ms, defined as 0 in uLCD_4DGL.hpp
+    while (!_cmd.readable()) ThisThread::sleep_for(0s);              // wait for screen answer
     if (_cmd.readable()) {
-        resp = _cmd.getc();           // read response
-        resp = _cmd.getc();
+        //change from getc
+        char *ret = 0;
+        _cmd.read(ret, 1);
+        _cmd.read(ret, 1);  
+        resp = (int) *ret;           // read response twice
     }
     return resp;
 }
@@ -89,10 +98,15 @@ int  uLCD_4DGL :: read_word()
     char command[1] = "";
     command[0] = READWORD;
     writeCOMMAND(command, 1);
-    while (!_cmd.readable()) wait_ms(TEMPO);              // wait for screen answer
+    //used to wait for TEMPO ms, defined as 0 in uLCD_4DGL.hpp
+    while (!_cmd.readable()) ThisThread::sleep_for(0s);              // wait for screen answer
     if (_cmd.readable()) {
-        resp = _cmd.getc();           // read response
-        resp = resp << 8 + _cmd.getc();
+        //change from getc
+        char *ret = 0;
+        _cmd.read(ret, 1);  
+        resp = (int) *ret;           // read response
+        _cmd.read(ret, 1);  
+        resp = resp << (8 + (int) *ret);
     }
     return resp;
 }

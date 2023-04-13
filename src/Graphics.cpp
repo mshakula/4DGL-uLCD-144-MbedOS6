@@ -18,7 +18,7 @@
 // along with uLCD_4DGL.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "mbed.h"
-#include "uLCD_4DGL.h"
+#include <4DGL-uLCD-144-MBedOS6/uLCD_4DGL.hpp>
 
 #define ARRAY_SIZE(X) sizeof(X)/sizeof(X[0])
 
@@ -233,7 +233,7 @@ void uLCD_4DGL :: BLIT(int x, int y, int w, int h, int *colors)     // draw a bl
     writeBYTE(w & 0xFF);
     writeBYTE((h >> 8) & 0xFF);
     writeBYTE(h & 0xFF);
-    wait_ms(1);
+    ThisThread::sleep_for(1ms);
     for (int i=0; i<w*h; i++) {
         red5   = (colors[i] >> (16 + 3)) & 0x1F;              // get red on 5 bits
         green6 = (colors[i] >> (8 + 2))  & 0x3F;              // get green on 6 bits
@@ -242,8 +242,11 @@ void uLCD_4DGL :: BLIT(int x, int y, int w, int h, int *colors)     // draw a bl
         writeBYTEfast(((green6 << 5) + (blue5 >> 0)) & 0xFF);  // second part of 16 bits color
     }
     int resp=0;
-    while (!_cmd.readable()) wait_ms(TEMPO);              // wait for screen answer
-    if (_cmd.readable()) resp = _cmd.getc();           // read response if any
+    //used to wait for TEMPO ms, defined as 0 in uLCD_4DGL.hpp
+    while (!_cmd.readable()) ThisThread::sleep_for(0s);              // wait for screen answer
+    char *ret = 0;
+    if (_cmd.readable()) _cmd.read(ret, 1);           // read response if any
+    resp = (int) *ret; //cast response to int         // read response if any
     switch (resp) {
         case ACK :                                     // if OK return   1
             resp =  1;
@@ -283,10 +286,14 @@ int uLCD_4DGL :: read_pixel(int x, int y)   // read screen info and populate dat
         writeBYTE(command[i]);
     }
 
-    while (!_cmd.readable()) wait_ms(TEMPO);    // wait a bit for screen answer
+    //used to wait for TEMPO ms, defined as 0 in uLCD_4DGL.hpp
+    while (!_cmd.readable()) ThisThread::sleep_for(0s);              // wait for screen answer
 
-    while ( resp < ARRAY_SIZE(response)) {   //read ack and 16-bit color response
-        temp = _cmd.getc();
+    while (_cmd.readable() && (unsigned int) resp < ARRAY_SIZE(response)) {
+        //change from getc
+        char *ret = 0;
+        _cmd.read(ret, 1);  
+        temp = (int) *ret;
         response[resp++] = (char)temp;
     }
 
