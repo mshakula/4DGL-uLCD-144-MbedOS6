@@ -14,3 +14,7 @@ Also supports to be installed as a CMake installation target.
 ## API Reference
 
 See [Jim Hamblen's original](https://os.mbed.com/users/4180_1/notebook/ulcd-144-g2-128-by-128-color-lcd/) reference.
+
+## Usage Changes
+
+Use Text_String instead of printf as stream is not longer suppored by new Mbed 6 [Unbuffered Serial](https://os.mbed.com/docs/mbed-os/v6.16/apis/unbufferedserial.html). In addition, the old method for waiting no longer works, manually wait ~100 ms between function calls.

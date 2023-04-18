@@ -218,7 +218,7 @@ uLCD_4DGL::text_string(
   int  size          = strlen(s);
   int  i             = 0;
 
-  set_font(font);
+  //set_font(font);
 
   command[0] = 0xE4; // move cursor
   command[1] = 0;

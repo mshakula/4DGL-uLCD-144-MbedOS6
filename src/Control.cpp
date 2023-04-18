@@ -38,7 +38,7 @@ uLCD_4DGL::uLCD_4DGL(PinName tx, PinName rx, PinName rst) :
 {
   // Constructor
 
-  // cmd_.set_baud(9600); //cant change
+  // cmd_.set_baud(9600); //cant change due to UnBuffered Serial
   cmd_.set_blocking(false);
 
 #if DEBUGMODE
@@ -52,7 +52,7 @@ uLCD_4DGL::uLCD_4DGL(PinName tx, PinName rx, PinName rst) :
 
   rst_ = 1; // put RESET pin to high to start TFT screen
   reset();
-  cls();                             // clear screen
+  //cls();                             // clear screen
   current_col         = 0;           // initial cursor col
   current_row         = 0;           // initial cursor row
   current_color       = WHITE;       // initial text color
@@ -115,7 +115,6 @@ uLCD_4DGL::writeCOMMAND(
   pc.printf("New COMMAND : 0x%02X\n", command[0]);
 #endif
   int i, resp = 0;
-  freeBUFFER();
   writeBYTE(0xFF);
   for (i = 0; i < number; i++) {
     if (i < 16)
@@ -123,23 +122,6 @@ uLCD_4DGL::writeCOMMAND(
     else
       writeBYTE(command[i]); // send command to serial port but slower
   }
-  /*
-  //used to wait for TEMPO ms, defined as 0 in uLCD_4DGL.hpp
-  while (!cmd_.readable()) ThisThread::sleep_for(0s);              // wait for
-screen answer char *ret = 0; if (cmd_.readable()) cmd_.read(ret, 1); // read
-response if any resp = (int) *ret; //cast response to int switch (resp) { case
-ACK :                                     // if OK return   1 resp =  1; break;
-      case NAK :                                     // if NOK return -1
-          resp = -1;
-          break;
-      default :
-          resp =  0;                                 // else return   0
-          break;
-  }
-#if DEBUGMODE
-  pc.printf("   Answer received : %d\n",resp);
-#endif
-  */
   return resp;
 }
 
@@ -166,7 +148,6 @@ uLCD_4DGL::writeCOMMANDnull(
   pc.printf("New COMMAND : 0x%02X\n", command[0]);
 #endif
   int i, resp = 0;
-  freeBUFFER();
   writeBYTE(0x00); // command has a null prefix byte
   for (i = 0; i < number; i++) {
     if (i < 16)                  // don't overflow LCD UART buffer
@@ -174,23 +155,6 @@ uLCD_4DGL::writeCOMMANDnull(
     else
       writeBYTE(command[i]); // send command to serial port with delay
   }
-  /*
-  //used to wait for TEMPO ms, defined as 0 in uLCD_4DGL.hpp
-  while (!cmd_.readable()) ThisThread::sleep_for(0s);              // wait for
-screen answer char *ret = 0; if (cmd_.readable()) cmd_.read(ret, 1); // read
-response if any resp = (int) *ret; //cast response to int switch (resp) { case
-ACK :                                     // if OK return   1 resp =  1; break;
-      case NAK :                                     // if NOK return -1
-          resp = -1;
-          break;
-      default :
-          resp =  0;                                 // else return   0
-          break;
-  }
-#if DEBUGMODE
-  pc.printf("   Answer received : %d\n",resp);
-#endif
-*/
   return resp;
 }
 
@@ -198,7 +162,6 @@ void
 uLCD_4DGL::cls() // clear screen
 {
   char command[1] = "";
-
   command[0] = CLS;
   writeCOMMAND(command, 1);
   current_row = 0;
