@@ -31,17 +31,6 @@ uLCD_4DGL::media_init()
   char command[1] = "";
   command[0]      = MINIT;
   writeCOMMAND(command, 1);
-  // used to wait for TEMPO ms, defined as 0 in uLCD_4DGL.hpp
-  while (!cmd_.readable())
-    ThisThread::sleep_for(0s); // wait for screen answer
-  if (cmd_.readable()) {
-    // change from getc
-    char* ret = 0;
-    cmd_.read(ret, 1);
-    resp = (int)*ret; // read response
-    cmd_.read(ret, 1);
-    resp = resp << (8 + (int)*ret);
-  }
   return resp;
 }
 
