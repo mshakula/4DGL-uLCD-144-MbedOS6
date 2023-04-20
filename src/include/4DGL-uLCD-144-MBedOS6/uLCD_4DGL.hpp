@@ -23,8 +23,7 @@
 #ifndef ULCD_4DGL_HPP
 #define ULCD_4DGL_HPP
 
-#include <drivers/DigitalOut.h>
-#include <drivers/UnbufferedSerial.h>
+#include <mbed.h>
 
 // Debug Verbose off - SGE commands echoed to USB serial for debugmode=1
 #ifndef DEBUGMODE
@@ -180,7 +179,7 @@
 #define UNPROTECT '\x02'
 
 /// \brief uLCD_4DGL application class.
-class uLCD_4DGL : public Stream
+class uLCD_4DGL : public mbed::Stream
 {
 
  public:
@@ -318,7 +317,7 @@ class uLCD_4DGL : public Stream
   int  version(void);
 
 #if DEBUGMODE
-  UnufferedSerial pc;
+  mbed::UnufferedSerial pc;
 #endif // DEBUGMODE
 };
 
