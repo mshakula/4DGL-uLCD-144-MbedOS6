@@ -20,7 +20,7 @@
 
 #include <mbed.h>
 
-#include <4DGL-uLCD-144-MBedOS6/uLCD_4DGL.hpp>
+#include <4DGL-uLCD-144-MbedOS6/uLCD_4DGL.hpp>
 
 #define ARRAY_SIZE(X) sizeof(X) / sizeof(X[0])
 

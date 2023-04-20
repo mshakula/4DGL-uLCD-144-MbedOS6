@@ -1,13 +1,13 @@
 ![LCD image](https://os.mbed.com/media/uploads/4180_1/8185.png)
 
-# 4DGL-uLCD-144-MBedOS6
+# 4DGL-uLCD-144-MbedOS6
 
-Fork of [Jim Hamblen's 4DGL-uLCD-SE](https://os.mbed.com/users/4180_1/code/4DGL-uLCD-SE/) from MBed2 repository.
+Fork of [Jim Hamblen's 4DGL-uLCD-SE](https://os.mbed.com/users/4180_1/code/4DGL-uLCD-SE/) from Mbed2 repository.
 Updated to work with [MbedOS 6 API](https://os.mbed.com/docs/mbed-os/v6.16/introduction/index.html) and with modern [CMake](https://cmake.org/cmake/help/latest/index.html) build tooling.
 
 ## Installation
 
-For easiest use in an CMake-based Mbed project, just add as a [git submodule](https://git-scm.com/book/en/v2/Git-Tools-Submodules), and then `add_subdirectory` in your CMakeLists.txt, and then `target_link_libraries` to `4DGL-uLCD-144-MBedOS6`.
+For easiest use in an CMake-based Mbed project, just add as a [git submodule](https://git-scm.com/book/en/v2/Git-Tools-Submodules), and then `add_subdirectory` in your CMakeLists.txt, and then `target_link_libraries` to `4DGL-uLCD-144-MbedOS6`.
 
 Also supports to be installed as a CMake installation target.
 

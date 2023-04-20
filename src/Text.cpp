@@ -5,7 +5,7 @@
 /// Fork of 4DGL library for 4D Systems LCD displays
 /// Copyright (C) <2010> Stephane ROCHON <stephane.rochon at free.fr>
 /// Modifed for Goldelox processor <2013> Jim Hamblen
-/// Patched for MBedOS 6 <2023>
+/// Patched for MbedOS 6 <2023>
 ///
 /// uLCD_4DGL is free software: you can redistribute it and/or modify
 /// it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@
 
 #include <mbed.h>
 
-#include <4DGL-uLCD-144-MBedOS6/uLCD_4DGL.hpp>
+#include <4DGL-uLCD-144-MbedOS6/uLCD_4DGL.hpp>
 
 void
 uLCD_4DGL::set_font_size(char width, char height) // set font size
@@ -218,7 +218,7 @@ uLCD_4DGL::text_string(
   int  size          = strlen(s);
   int  i             = 0;
 
-  //set_font(font);
+  // set_font(font);
 
   command[0] = 0xE4; // move cursor
   command[1] = 0;

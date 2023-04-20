@@ -5,7 +5,7 @@
 /// Fork of 4DGL library for 4D Systems LCD displays
 /// Copyright (C) <2010> Stephane ROCHON <stephane.rochon at free.fr>
 /// Modifed for Goldelox processor <2013> Jim Hamblen
-/// Patched for MBedOS 6 <2023>
+/// Patched for MbedOS 6 <2023>
 ///
 /// uLCD_4DGL is free software: you can redistribute it and/or modify
 /// it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@
 
 #include <mbed.h>
 
-#include <4DGL-uLCD-144-MBedOS6/uLCD_4DGL.hpp>
+#include <4DGL-uLCD-144-MbedOS6/uLCD_4DGL.hpp>
 
 #define ARRAY_SIZE(X) sizeof(X) / sizeof(X[0])
 
@@ -52,7 +52,7 @@ uLCD_4DGL::uLCD_4DGL(PinName tx, PinName rx, PinName rst) :
 
   rst_ = 1; // put RESET pin to high to start TFT screen
   reset();
-  //cls();                             // clear screen
+  // cls();                             // clear screen
   current_col         = 0;           // initial cursor col
   current_row         = 0;           // initial cursor row
   current_color       = WHITE;       // initial text color
@@ -162,7 +162,7 @@ void
 uLCD_4DGL::cls() // clear screen
 {
   char command[1] = "";
-  command[0] = CLS;
+  command[0]      = CLS;
   writeCOMMAND(command, 1);
   current_row = 0;
   current_col = 0;
